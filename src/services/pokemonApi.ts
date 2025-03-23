@@ -14,6 +14,12 @@ interface TypeResponse {
   pokemon: TypePokemon[];
 }
 
+/**
+ * Fetches a paginated list of Pokemon, optionally filtered by type
+ * @param page - The page number to fetch (1-based)
+ * @param types - Array of Pokemon types to filter by
+ * @returns Promise containing the paginated Pokemon list response
+ */
 export const fetchPokemonList = async (
   page: number = 1,
   types: string[] = []
@@ -57,6 +63,11 @@ export const fetchPokemonList = async (
   return response.json();
 };
 
+/**
+ * Fetches detailed information about a specific Pokemon
+ * @param url - The URL of the Pokemon to fetch details for
+ * @returns Promise containing the Pokemon's detailed information
+ */
 export const fetchPokemonDetail = async (
   url: string
 ): Promise<PokemonDetail> => {
