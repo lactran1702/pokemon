@@ -6,6 +6,13 @@ import { PokemonDetail } from "../types/pokemon";
 import { PokemonType, getTypeColor } from "../types/pokemonTypes";
 import { fetchPokemonDetail } from "../services/pokemonApi";
 
+/**
+ * Props for the PokemonItem component
+ * @interface PokemonItemProps
+ * @property {string} url - The URL to fetch Pokemon details from
+ * @property {PokemonType[]} selectedTypes - Array of selected Pokemon types for filtering
+ * @property {boolean} [priority=false] - Whether to prioritize loading this Pokemon's image
+ */
 interface PokemonItemProps {
   url: string;
   selectedTypes: PokemonType[];
