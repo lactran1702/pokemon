@@ -3,8 +3,17 @@ export interface Pokemon {
   url: string;
 }
 
+export interface PokemonType {
+  slot: number;
+  type: {
+    name: string;
+    url: string;
+  };
+}
+
 export interface PokemonDetail {
   name: string;
+  types: PokemonType[];
   sprites: {
     front_default: string | null;
     other: {
