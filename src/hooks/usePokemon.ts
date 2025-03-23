@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { PokemonDetail, PokemonListResponse } from "../types/pokemon";
 import { fetchPokemonDetail, fetchPokemonList } from "../services/pokemonApi";
 
-export const usePokemonList = () => {
+export const usePokemonList = (page: number = 1) => {
   return useQuery<PokemonListResponse>({
-    queryKey: ["pokemonList"],
-    queryFn: fetchPokemonList,
+    queryKey: ["pokemonList", page],
+    queryFn: () => fetchPokemonList(page),
   });
 };
 

@@ -1,9 +1,15 @@
 import { PokemonDetail, PokemonListResponse } from "../types/pokemon";
 
 const BASE_URL = "https://pokeapi.co/api/v2";
+const ITEMS_PER_PAGE = 24;
 
-export const fetchPokemonList = async (): Promise<PokemonListResponse> => {
-  const response = await fetch(`${BASE_URL}/pokemon?limit=100000&offset=0`);
+export const fetchPokemonList = async (
+  page: number = 1
+): Promise<PokemonListResponse> => {
+  const offset = (page - 1) * ITEMS_PER_PAGE;
+  const response = await fetch(
+    `${BASE_URL}/pokemon?limit=${ITEMS_PER_PAGE}&offset=${offset}`
+  );
   return response.json();
 };
 
