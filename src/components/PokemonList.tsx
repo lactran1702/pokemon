@@ -6,6 +6,7 @@ import { fetchPokemonList } from "../services/pokemonApi";
 import { PokemonItem } from "./PokemonItem";
 import { TypeFilter } from "./TypeFilter";
 import { Pagination } from "./Pagination";
+import { LoadingSkeleton } from "./LoadingSkeleton";
 
 const ITEMS_PER_PAGE = 24;
 const INITIAL_LOAD_COUNT = 12;
@@ -112,17 +113,7 @@ export const PokemonList = () => {
       />
 
       {isLoading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-          {[...Array(INITIAL_LOAD_COUNT)].map((_, i) => (
-            <div key={i} className="bg-white rounded-lg p-4 animate-pulse">
-              <div className="relative w-full aspect-[1/1] bg-gray-200 rounded" />
-              <div className="h-6 bg-gray-200 rounded mt-2 w-3/4 mx-auto" />
-              <div className="flex gap-2 justify-center mt-2">
-                <div className="h-6 bg-gray-200 rounded w-16" />
-              </div>
-            </div>
-          ))}
-        </div>
+        <LoadingSkeleton count={INITIAL_LOAD_COUNT} />
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
           {displayedPokemon.map((pokemon, index) => (

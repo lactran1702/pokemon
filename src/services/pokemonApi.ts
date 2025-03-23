@@ -15,6 +15,31 @@ interface TypeResponse {
 }
 
 /**
+ * Fetches Pokemon filtered by type
+ * @param types - Array of Pokemon types to filter by
+ * @returns Promise containing an array of Pokemon URLs
+ */
+const fetchPokemonByTypes = async (
+  types: string[]
+): Promise<{ name: string; url: string }[]> => {
+  const typePromises = types.map((type) =>
+    fetch(`${BASE_URL}/type/${type}`).then((res) => res.json())
+  );
+
+  const typeResults = (await Promise.all(typePromises)) as TypeResponse[];
+  const pokemonUrls = new Set(
+    typeResults.flatMap((result) =>
+      result.pokemon.map((p: TypePokemon) => p.pokemon.url)
+    )
+  );
+
+  return Array.from(pokemonUrls).map((url) => ({
+    name: url.split("/").slice(-2)[0],
+    url,
+  }));
+};
+
+/**
  * Fetches a paginated list of Pokemon, optionally filtered by type
  * @param page - The page number to fetch (1-based)
  * @param types - Array of Pokemon types to filter by
@@ -27,22 +52,7 @@ export const fetchPokemonList = async (
   const offset = (page - 1) * ITEMS_PER_PAGE;
 
   if (types.length > 0) {
-    const typePromises = types.map((type) =>
-      fetch(`${BASE_URL}/type/${type}`).then((res) => res.json())
-    );
-
-    const typeResults = (await Promise.all(typePromises)) as TypeResponse[];
-    const pokemonUrls = new Set(
-      typeResults.flatMap((result) =>
-        result.pokemon.map((p: TypePokemon) => p.pokemon.url)
-      )
-    );
-
-    const allPokemon = Array.from(pokemonUrls).map((url) => ({
-      name: url.split("/").slice(-2)[0],
-      url,
-    }));
-
+    const allPokemon = await fetchPokemonByTypes(types);
     const paginatedResults = allPokemon.slice(offset, offset + ITEMS_PER_PAGE);
 
     return {

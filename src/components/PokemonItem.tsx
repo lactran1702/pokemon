@@ -3,8 +3,10 @@
 import React, { useState, useEffect, memo } from "react";
 import Image from "next/image";
 import { PokemonDetail } from "../types/pokemon";
-import { PokemonType, getTypeColor } from "../types/pokemonTypes";
+import { PokemonType } from "../types/pokemonTypes";
 import { fetchPokemonDetail } from "../services/pokemonApi";
+import { TypeBadge } from "./TypeBadge";
+import { LoadingSkeleton } from "./LoadingSkeleton";
 
 /**
  * Props for the PokemonItem component
@@ -57,15 +59,7 @@ export const PokemonItem = memo(
     }, [url]);
 
     if (isLoading) {
-      return (
-        <div className="bg-white rounded-lg p-4 animate-pulse">
-          <div className="relative w-full aspect-[1/1] bg-gray-200 rounded" />
-          <div className="h-6 bg-gray-200 rounded mt-2 w-3/4 mx-auto" />
-          <div className="flex gap-2 justify-center mt-2">
-            <div className="h-6 bg-gray-200 rounded w-16" />
-          </div>
-        </div>
-      );
+      return <LoadingSkeleton count={1} />;
     }
 
     if (error) {
@@ -109,13 +103,10 @@ export const PokemonItem = memo(
         </h2>
         <div className="flex gap-2 justify-center mt-2">
           {pokemon.types.map((type) => (
-            <span
+            <TypeBadge
               key={type.type.name}
-              className={`px-2 py-1 rounded-full text-sm font-medium capitalize
-              ${getTypeColor(type.type.name as PokemonType)}`}
-            >
-              {type.type.name}
-            </span>
+              type={type.type.name as PokemonType}
+            />
           ))}
         </div>
       </div>
