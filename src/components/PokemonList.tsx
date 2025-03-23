@@ -139,7 +139,7 @@ export const PokemonList = () => {
       <div className="flex flex-wrap gap-2 mb-6">
         <button
           onClick={() => setSelectedTypes([])}
-          className={`px-4 py-2 rounded-full text-sm font-medium
+          className={`px-4 py-2 rounded-full text-sm font-medium cursor-pointer
             ${
               selectedTypes.length === 0
                 ? "bg-blue-500 text-white"
@@ -152,7 +152,7 @@ export const PokemonList = () => {
           <button
             key={type}
             onClick={() => toggleType(type)}
-            className={`px-4 py-2 rounded-full text-sm font-medium capitalize
+            className={`px-4 py-2 rounded-full text-sm font-medium capitalize cursor-pointer
               ${
                 selectedTypes.includes(type)
                   ? getTypeColor(type)
@@ -178,7 +178,7 @@ export const PokemonList = () => {
         <button
           onClick={() => setPage((p) => Math.max(1, p - 1))}
           disabled={page === 1}
-          className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
+          className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300 hover:bg-blue-600 disabled:cursor-not-allowed cursor-pointer"
         >
           Previous
         </button>
@@ -188,7 +188,7 @@ export const PokemonList = () => {
         <button
           onClick={() => setPage((p) => p + 1)}
           disabled={page >= Math.ceil(totalCount / 24)}
-          className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
+          className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300 hover:bg-blue-600 disabled:cursor-not-allowed cursor-pointer"
         >
           Next
         </button>
